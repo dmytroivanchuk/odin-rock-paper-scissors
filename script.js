@@ -5,9 +5,6 @@ Declare a variable named computerScore with number of 0
 let playerScore = 0;
 let computerScore = 0;
 
-// Print "Welcome to Rock Paper Scissors game! Type "game()" to console to start playing."
-console.log(`Welcome to Rock Paper Scissors game! Type "game()" to console to start playing.`)
-
 /*
 Declare a function named getComputerChoice
 Declare a variable named choices with array, holding "rock", "paper" and "scissors" text values
@@ -69,44 +66,44 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-/*
-Declare a function named game
-Print "Starting a 5 round game..."
-Loop 5 times
-Capture user input and store the result in a variable named playerSelection
-Make playerSelection case-insensitive
-Declare a varible named computerSelection with the result of the getComputerChoice function
-If playerSelection doesn't match "rock", "paper" or "scissors" text values print "Error! Please, type the valid element in prompt window."
-If playerSelection matches one of the "rock", "paper" or "scissors" text values:
-print the result of the playRound function with first parameter set to playerSelection variable and second parameter set to computerSelection variable
-print the following text: "You: playerScore, Computer: computerScore ..." where playerScore and computerScore are substituted with appropriate variables
-End loop
-If playerScore is larger than computerScore print "Game is over. You've won against Computer with playerScore : computerScore score." where playerScore and computerScore are substituted with appropriate variables
-If computerScore is larger than playerScore print "Game is over. You've lost against Computer with playerScore : computerScore score." where playerScore and computerScore are substituted with appropriate variables
-If playerScore equals computerScore print "Game is over. You've drawn against Computer with playerScore : computerScore score." where playerScore and computerScore are substituted with appropriate variables
-Set playerScore and computerScore variables to number of 0
-Print "Type "game()" to console to start a new game."
-*/
-function game() {
-  console.log("Starting a 5 round game...");
-  for (let i = 0; i < 5; i++) {
-    const playerSelection = prompt("Please, type the element.").toLowerCase();
-    const computerSelection = getComputerChoice();
-    if (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors") {
-      console.log("Error! Please, type the valid element in prompt window.");
+document.body.addEventListener("click", (event) => {
+  let target = event.target;
+
+  if (target.id === "end-game") {
+    if (playerScore > computerScore) {
+      let playerWonResult = `Game is over. You've won against Computer with ${playerScore} : ${computerScore} score.`;
+      createGameResponse(playerWonResult);
+    } else if (playerScore < computerScore) {
+      let computerWonResult = `Game is over. You've lost against Computer with ${playerScore} : ${computerScore} score.`;
+      createGameResponse(computerWonResult);
     } else {
-      console.log(playRound(playerSelection, computerSelection));
-      console.log(`You: ${playerScore}, Computer: ${computerScore} ...`);
+      let drawResult = `Game is over. You've drawn against Computer with ${playerScore} : ${computerScore} score.`;
+      createGameResponse(drawResult);
     }
-  }
-  if (playerScore > computerScore) {
-    console.log(`Game is over. You've won against Computer with ${playerScore} : ${computerScore} score.`);
-  } else if (playerScore < computerScore) {
-    console.log(`Game is over. You've lost against Computer with ${playerScore} : ${computerScore} score.`);
+
+    playerScore = 0;
+    computerScore = 0;
+  } else if (target.id === "start-game") {
+    let gameResponses = document.querySelectorAll(".game-response");
+    if (gameResponses) {
+      gameResponses.forEach((response) => {
+        response.remove();
+      });
+    }
   } else {
-    console.log(`Game is over. You've drawn against Computer with ${playerScore} : ${computerScore} score.`);
+    let playerSelection = target.id;
+    let computerSelection = getComputerChoice();
+    let singleRoundResult = playRound(playerSelection, computerSelection);
+    let scoreResult = `You: ${playerScore}, Computer: ${computerScore} ...`;
+
+    createGameResponse(singleRoundResult);
+    createGameResponse(scoreResult);
   }
-  playerScore = 0;
-  computerScore = 0;
-  console.log(`Type "game()" to console to start a new game.`)
+});
+
+function createGameResponse(string) {
+  let gameResponse = document.createElement("div");
+  gameResponse.classList.add("game-response");
+  gameResponse.textContent = string;
+  document.body.appendChild(gameResponse);
 }
