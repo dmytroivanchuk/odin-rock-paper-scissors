@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/dmytroivanchuk/odin-rock-paper-scissors/compare/v1.1.0...v1.2.0) (2023-11-11)
+
+
+### Features
+
+* add UI ([a3c0ae9](https://github.com/dmytroivanchuk/odin-rock-paper-scissors/commit/a3c0ae9273ef7723e99d853d7823c58c2d26599e))
+
 ## 1.1.0 (2023-11-06)
 
 
